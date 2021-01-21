@@ -6,7 +6,6 @@ import com.example.slms.Entity.User;
 import com.example.slms.Exceptions.CustomException;
 import com.example.slms.Repository.BookRepository;
 import com.example.slms.Service.BookService;
-import com.example.slms.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +42,17 @@ public class BookServiceImp implements BookService {
 
     @Transactional
     public List<Book> findAllBooks(){
-        return bookRepository.findAll();
+        List<Book> books = new ArrayList<>();
+        bookRepository.findAll()
+                .forEach(book -> {
+                    User user = new User();
+                    user.setUserID(book.getBorrower().getUserID());
+                    user.setUsername(book.getBorrower().getUsername());
+                    user.setRole(book.getBorrower().getRole());
+                    book.setBorrower(user);
+                    books.add(book);
+                });
+        return books;
     }
 
     public Book findById(long id){
