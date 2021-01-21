@@ -13,8 +13,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Optional<Book> findByBookName(String bookName);
 
-    @Query(value = "SELECT b FROM Book b WHERE b.isAvailable = :isAvailable")
-//    @Query(value = "SELECT * FROM books AS b WHERE Availability = :isAvailable")
+    @Query("SELECT b FROM Book b WHERE b.isAvailable = :isAvailable")
     List<Book> findAllAvailableBooks(@Param("isAvailable") boolean isAvailable);
 
     @Query(value = "SELECT * FROM books WHERE Category = :category", nativeQuery = true)

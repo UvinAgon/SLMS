@@ -62,7 +62,7 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.findByBookName(bookName));
     }
 //    /{isAvailable}
-    @RequestMapping( value = "/available", method = RequestMethod.GET,
+    @RequestMapping( value = "/", method = RequestMethod.GET,
             produces = { MediaType.APPLICATION_JSON_VALUE })
     public List<Book> findAllAvailableBooks(@RequestParam(value = "isAvailable", required = true) boolean isAvailable){
         return bookService.findAllAvailableBooks(isAvailable);

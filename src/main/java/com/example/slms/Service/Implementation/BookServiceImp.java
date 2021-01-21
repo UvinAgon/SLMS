@@ -6,6 +6,7 @@ import com.example.slms.Entity.User;
 import com.example.slms.Exceptions.CustomException;
 import com.example.slms.Repository.BookRepository;
 import com.example.slms.Service.BookService;
+import com.example.slms.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

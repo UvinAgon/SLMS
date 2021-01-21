@@ -5,8 +5,4 @@ public enum GenderEnum {
 //        Female;
         M,
         F;
-
-//        public String getGender() {
-//                return this.name();
-//        }
 }
