@@ -7,14 +7,14 @@ import java.util.List;
 public interface BookService {
 
     BookDetailsProjection customBookDetails(long id);
-    List<Book> findAllByCategory(String category);
+    List<Book> findAllByCategory(String category);      // Pending
 
-    Book findByBookName(String bookName);
+//    Book findByBookName(String bookName);
     Book findById(long id);
-    List<Book> findAllBooks();
+    List<Book> findAllBooks();          // Done
 
-    List<Book> findAllAvailableBooks(boolean isAvailable);
-    boolean isAvailable(long id);
+    List<Book> findAllAvailableBooks(boolean isAvailable);        // Done
+    boolean isAvailable(long id);       // Done
 
     Book addBook(Book book);
     boolean deleteBook(long id);

@@ -27,7 +27,7 @@ public class Book {
     @Column(name = "Availability")
     private boolean isAvailable;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_ID")
     private User borrower;
 

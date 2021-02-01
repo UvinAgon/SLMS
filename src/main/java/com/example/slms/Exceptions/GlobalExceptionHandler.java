@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     ResponseEntity userNotFoundHandler(Exception ex) {
         ResponseDto response = new ResponseDto();
         if (ex instanceof CustomException) {
-            response.setMessage("No user found");
+            response.setMessage(ex.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
         else {

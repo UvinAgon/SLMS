@@ -21,6 +21,11 @@ public class BookServiceImp implements BookService {
     private BookRepository bookRepository;
 
     public List<Book> findAllByCategory(String category){
+//        List<Book> books = new ArrayList<>();
+//        bookRepository.findAllByCategory(category)
+//                .forEach(book -> {
+//                    book.setBorrower();
+//                });
         return bookRepository.findAllByCategory(category);
     };
 
@@ -56,8 +61,18 @@ public class BookServiceImp implements BookService {
     }
 
     public Book findById(long id){
-        return bookRepository.findById(id)
-                .orElseThrow(() -> new CustomException(400, "Book not found"));
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        if (bookOptional.isPresent()) {
+            User user = new User();
+            user.setUserID(bookOptional.get().getBorrower().getUserID());
+            user.setUsername(bookOptional.get().getBorrower().getUsername());
+            user.setRole(bookOptional.get().getBorrower().getRole());
+            user.setBookList(null);
+            bookOptional.get().setBorrower(user);
+            return bookOptional.get();
+        }else throw new CustomException(400, "Book not found");
+//        return bookOptional
+//                .orElseThrow(() -> new CustomException(400, "Book not found"));
     }
 
     public Book findByBookName(String bookName){
