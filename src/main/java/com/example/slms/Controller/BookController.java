@@ -18,7 +18,7 @@ public class BookController {
 
 //  "/slms/books/custom/{id}"            - GET  - customBookDetails  - Works without isAvailable and borrower
 //  "/slms/books/custom/{category}"      - GET  - findAllByCategory  - NA
-//  "/slms/books/custom/{bookName}"      - GET  - findByBookName     - NA
+//  "/slms/books/custom/{bookName}"      - GET  - findByBookName     - NA  ---> Done but mapped same to findAllAvailableBooks
 //  "/slms/books/"                       - POST - addBook            - NA
 //                                       - GET  - findAllBooks       - DONE
 //                                       - GET  - findAllAvailableBooks - DONE
@@ -61,17 +61,17 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.findById(id));
     }
 
-//    @RequestMapping( value = "", method = RequestMethod.GET,
-//            produces = { MediaType.APPLICATION_JSON_VALUE })
-//    public ResponseEntity<Book> findByBookName(@RequestParam(value = "bookName", required = true) String bookName){
-//        return ResponseEntity.ok().body(bookService.findByBookName(bookName));
-//    }
-
     @RequestMapping( value = "/", method = RequestMethod.GET,
             produces = { MediaType.APPLICATION_JSON_VALUE })
-    public List<Book> findAllAvailableBooks(@RequestParam(value = "isAvailable", required = true) boolean isAvailable){
-        return bookService.findAllAvailableBooks(isAvailable);
+    public ResponseEntity<Book> findByBookName(@RequestParam(value = "bookName", required = true) String bookName){
+        return ResponseEntity.ok().body(bookService.findByBookName(bookName));
     }
+
+//    @RequestMapping( value = "/", method = RequestMethod.GET,
+//            produces = { MediaType.APPLICATION_JSON_VALUE })
+//    public List<Book> findAllAvailableBooks(@RequestParam(value = "isAvailable", required = true) boolean isAvailable){
+//        return bookService.findAllAvailableBooks(isAvailable);
+//    }
 
     @RequestMapping( value = "/{id}/available", method = RequestMethod.GET,
             produces = { MediaType.APPLICATION_JSON_VALUE })

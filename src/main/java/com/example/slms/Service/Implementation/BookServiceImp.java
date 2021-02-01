@@ -78,6 +78,11 @@ public class BookServiceImp implements BookService {
     public Book findByBookName(String bookName){
         Optional<Book> bookOptional = bookRepository.findByBookName(bookName);
         if (bookOptional.isPresent()){
+            User user = new User();
+            user.setUserID(bookOptional.get().getBorrower().getUserID());
+            user.setUsername(bookOptional.get().getBorrower().getUsername());
+            user.setRole(bookOptional.get().getBorrower().getRole());
+            bookOptional.get().setBorrower(user);
             return bookOptional.get();
         }else throw new CustomException(400, "Book not found");
     }

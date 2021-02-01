@@ -9,7 +9,7 @@ public interface BookService {
     BookDetailsProjection customBookDetails(long id);
     List<Book> findAllByCategory(String category);      // Pending
 
-//    Book findByBookName(String bookName);
+    Book findByBookName(String bookName);
     Book findById(long id);
     List<Book> findAllBooks();          // Done
 
