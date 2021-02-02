@@ -20,6 +20,7 @@ public class BookController {
 //  "/slms/books/"               - GET  - findAllByCategory  - DONE
 //                               - GET  - findByBookName     - DONE
 //                               - GET  - findAllAvailableBooks - DONE
+//                               - PUT  - updateBorrower     - DONE
 //  "/slms/books"                - POST - addBook            - NA
 //                               - GET  - findAllBooks       - DONE
 //  "/slms/books/{id}"           - GET  - findById           - DONE
@@ -43,10 +44,13 @@ public class BookController {
     }
 
     @RequestMapping( value = "", method = RequestMethod.POST)
-    public ResponseEntity<Book> addBook(@RequestBody Book book){
-//        Book bo = new Book();
-//        bo.setBorrowDate(book.getBorrowDate());
-        return ResponseEntity.ok().body(bookService.addBook(book));
+    public ResponseEntity<Book> addBook(@RequestBody Book book, @RequestParam(required = false) long userId){
+        return ResponseEntity.ok().body(bookService.addBook(book,userId));
+    }
+
+    @RequestMapping( value = "", method = RequestMethod.PUT)
+    public ResponseEntity<Book> updateBorrower(@RequestParam long bookId, @RequestParam long userId){
+        return ResponseEntity.ok().body(bookService.updateBorrower(bookId,userId));
     }
 
     @RequestMapping( value = "", method = RequestMethod.GET,

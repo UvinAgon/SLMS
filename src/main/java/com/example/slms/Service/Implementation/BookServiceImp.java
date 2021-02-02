@@ -5,6 +5,7 @@ import com.example.slms.Entity.BookDetailsProjection;
 import com.example.slms.Entity.User;
 import com.example.slms.Exceptions.CustomException;
 import com.example.slms.Repository.BookRepository;
+import com.example.slms.Repository.UserRepository;
 import com.example.slms.Service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class BookServiceImp implements BookService {
 
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Book> findAllByCategory(String category){
         List<Book> books = new ArrayList<>();
@@ -43,11 +46,18 @@ public class BookServiceImp implements BookService {
         }
     }
 
-    public Book addBook(Book book){
+    public Book addBook(Book book, long userId){
         Optional<Book> optionalBook = bookRepository.findByBookName(book.getBookName());
-        if(optionalBook.isPresent()){
-            throw new CustomException(400, "Book already exist");
-        }else return bookRepository.save(book);
+        if(!optionalBook.isPresent()){
+            bookRepository.save(book);
+            Optional<Book> optionalBook1 = bookRepository.findByBookName(book.getBookName());
+            if (userId!=0){
+                Optional<User> optionalUser = userRepository.findById(userId);
+                optionalUser.get().setBookList(null);
+                optionalBook1.get().setBorrower(optionalUser.get());
+            }
+            return bookRepository.save(optionalBook1.get());
+        }else throw new CustomException(400, "Book already exist");
     }
 
     @Transactional
@@ -63,6 +73,17 @@ public class BookServiceImp implements BookService {
                     books.add(book);
                 });
         return books;
+    }
+
+    @Transactional
+    public Book updateBorrower(long bookId, long userId){
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
+        if (optionalBook.isPresent()){
+            Optional<User> optionalUser = userRepository.findById(userId);
+            optionalUser.get().setBookList(null);
+            optionalBook.get().setBorrower(optionalUser.get());
+            return optionalBook.get();
+        }else throw new CustomException(400, "Book already exist");
     }
 
     public Book findById(long id){
