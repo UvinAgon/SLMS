@@ -6,18 +6,18 @@ import java.util.List;
 
 public interface BookService {
 
-    BookDetailsProjection customBookDetails(long id);
-    List<Book> findAllByCategory(String category);      // Pending
+    BookDetailsProjection customBookDetails(long id);   // PENDING
+    List<Book> findAllByCategory(String category);            // DONE
 
-    Book findByBookName(String bookName);
-    Book findById(long id);
-    List<Book> findAllBooks();          // Done
+    Book findByBookName(String bookName);    // DONE
+    Book findById(long id);                  // DONE
+    List<Book> findAllBooks();               // Done
 
-    List<Book> findAllAvailableBooks(boolean isAvailable);        // Done
-    boolean isAvailable(long id);       // Done
+    List<Book> findAllAvailableBooks(boolean isAvailable);    // Done
+    boolean isAvailable(long id);                             // Done
 
-    Book addBook(Book book);
-    boolean deleteBook(long id);
-    Book updateBook(long id, Book book);
+    Book addBook(Book book);                // NA
+    boolean deleteBook(long id);            // NA
+    Book updateBook(long id, Book book);    // NA
 
 }

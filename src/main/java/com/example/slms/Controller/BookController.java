@@ -16,16 +16,16 @@ import java.util.List;
 @RequestMapping( path = "/slms/books" )
 public class BookController {
 
-//  "/slms/books/custom/{id}"            - GET  - customBookDetails  - Works without isAvailable and borrower
-//  "/slms/books/custom/{category}"      - GET  - findAllByCategory  - NA
-//  "/slms/books/custom/{bookName}"      - GET  - findByBookName     - NA  ---> Done but mapped same to findAllAvailableBooks
-//  "/slms/books/"                       - POST - addBook            - NA
-//                                       - GET  - findAllBooks       - DONE
-//                                       - GET  - findAllAvailableBooks - DONE
-//  "/slms/books/{id}"                   - GET  - findById           - DONE
-//                                       - PUT  - updateBook         - NA
-//                                     - DELETE - findById           - NA
-//  "/slms/books/{id}/available"         - GET  - isAvailable        - DONE
+//  "/slms/books/custom/{id}"    - GET  - customBookDetails  - isAvailable and borrower is na in Query
+//  "/slms/books/"               - GET  - findAllByCategory  - DONE
+//                               - GET  - findByBookName     - DONE
+//                               - GET  - findAllAvailableBooks - DONE
+//  "/slms/books"                - POST - addBook            - NA
+//                               - GET  - findAllBooks       - DONE
+//  "/slms/books/{id}"           - GET  - findById           - DONE
+//                               - PUT  - updateBook         - NA
+//                               - DELETE - findById         - NA
+//  "/slms/books/{id}/available" - GET  - isAvailable        - DONE
 
     @Autowired
     private BookService bookService;
@@ -36,9 +36,9 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.customBookDetails(id));
     }
 
-    @RequestMapping( value = "/custom/{category}", method = RequestMethod.GET,
+    @RequestMapping( value = "/", params = "category", method = RequestMethod.GET,
             produces = { MediaType.APPLICATION_JSON_VALUE })
-    public List<Book> findAllByCategory(@RequestParam(value = "category", required = true) String category){
+    public List<Book> findAllByCategory(@RequestParam String category){
         return bookService.findAllByCategory(category);
     }
 
@@ -61,17 +61,17 @@ public class BookController {
         return ResponseEntity.ok().body(bookService.findById(id));
     }
 
-    @RequestMapping( value = "/", method = RequestMethod.GET,
+    @RequestMapping( value = "/", params = "bookName", method = RequestMethod.GET,
             produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Book> findByBookName(@RequestParam(value = "bookName", required = true) String bookName){
+    public ResponseEntity<Book> findByBookName(@RequestParam String bookName){
         return ResponseEntity.ok().body(bookService.findByBookName(bookName));
     }
 
-//    @RequestMapping( value = "/", method = RequestMethod.GET,
-//            produces = { MediaType.APPLICATION_JSON_VALUE })
-//    public List<Book> findAllAvailableBooks(@RequestParam(value = "isAvailable", required = true) boolean isAvailable){
-//        return bookService.findAllAvailableBooks(isAvailable);
-//    }
+    @RequestMapping( value = "/", params = "isAvailable", method = RequestMethod.GET,
+            produces = { MediaType.APPLICATION_JSON_VALUE })
+    public List<Book> findAllAvailableBooks(@RequestParam boolean isAvailable){
+        return bookService.findAllAvailableBooks(isAvailable);
+    }
 
     @RequestMapping( value = "/{id}/available", method = RequestMethod.GET,
             produces = { MediaType.APPLICATION_JSON_VALUE })

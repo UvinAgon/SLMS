@@ -21,12 +21,17 @@ public class BookServiceImp implements BookService {
     private BookRepository bookRepository;
 
     public List<Book> findAllByCategory(String category){
-//        List<Book> books = new ArrayList<>();
-//        bookRepository.findAllByCategory(category)
-//                .forEach(book -> {
-//                    book.setBorrower();
-//                });
-        return bookRepository.findAllByCategory(category);
+        List<Book> books = new ArrayList<>();
+        bookRepository.findAllByCategory(category)
+                .forEach(book -> {
+                    User user = new User();
+                    user.setUserID(book.getBorrower().getUserID());
+                    user.setUsername(book.getBorrower().getUsername());
+                    user.setRole(book.getBorrower().getRole());
+                    book.setBorrower(user);
+                    books.add(book);
+                });
+        return books;
     };
 
     public BookDetailsProjection customBookDetails(long id){

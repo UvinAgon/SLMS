@@ -19,10 +19,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = "SELECT * FROM books WHERE Category = :category", nativeQuery = true)
     List<Book> findAllByCategory(@Param("category") String category);
 
-    @Query(value = "Select Book_ID as bookId, Book_Name as bookName, Category as category, Availability as isAvailable,  Borrow_Date as borrowDate, Return_Date as returnDate from books where Book_ID = :bookId", nativeQuery = true)
-    Optional<BookDetailsProjection> customBookDetails(@Param("bookId") long id);
-//     user_ID as borrower
+//    @Query("SELECT b.bookId, b.bookName, b.category, b.borrowDate, b.returnDate, b.isAvailable FROM Book b WHERE b.bookId = :bookId")
+    @Query(value = "Select Book_ID as bookId, Book_Name as bookName, Category as category, Borrow_Date as borrowDate, Return_Date as returnDate from books where Book_ID = :bookId", nativeQuery = true)
+    Optional<BookDetailsProjection> customBookDetails(@Param("bookId") long bookId);
+//, Availability as isAvailable
 
-//    @Query(value = "SELECT * FROM `books` WHERE Category = :category", nativeQuery = true)
-//    List<Book> findAllByCategory(@Param("category") String category);
 }

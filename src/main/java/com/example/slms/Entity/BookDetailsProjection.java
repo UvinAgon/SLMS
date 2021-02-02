@@ -7,7 +7,7 @@ public interface BookDetailsProjection {
     long getBookId();
     String getBookName();
     String getCategory();
-    boolean isAvailable();
+//    boolean isAvailable();
 //    User getBorrower();
     Date getBorrowDate();
     Date getReturnDate();
